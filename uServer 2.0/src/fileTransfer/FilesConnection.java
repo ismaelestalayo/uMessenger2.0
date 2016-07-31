@@ -133,9 +133,11 @@ public class FilesConnection {
     public void sendArray(FilesArray a, long segmentSize){
         
         long dim = a.getDim();
-        System.out.println("   >File size: " + dim/1000 + "kb");
+        if((float)dim/1000000 < 1)
+            System.out.println(" [" + (float)dim/1000 + "kb]");
+        if((float)dim/1000000 > 1)
+            System.out.println(" [" + (float)dim/1000000 + "Mb]");
         sendLong(dim);
-        //System.out.println("  >Segment size: " + segmentSize);
         sendLong(segmentSize);
         System.out.print("    [");
         
@@ -168,15 +170,16 @@ public class FilesConnection {
         } catch (IOException ex) {
             System.out.println("   >ERROR SENDING LAST SEGMENT: " + ex);
         }
-        System.out.println("   >File transfer complete.");
     }
     
     public FilesArray receiveArray(){
         
         long dim = receiveLong();
-        System.out.println("   >File size: " + dim/1000 + "kb");
+        if((float)dim/1000000 < 1)
+            System.out.println(" [" + (float)dim/1000 + "kb]");
+        if((float)dim/1000000 > 1)
+            System.out.println(" [" + (float)dim/1000000 + "Mb]");
         long segmentSize = receiveLong();
-        //System.out.println("  >Segment size: " + segmentSize);
         System.out.print("    [");
         
         //All segments except the last one
@@ -208,7 +211,6 @@ public class FilesConnection {
         } catch (IOException ex) {
             System.out.println("   >ERROR RECEIVING LAST SEGMENT: " + ex);
         }
-        System.out.println("   >File transfer complete.");
         
         return b;
     }

@@ -13,7 +13,7 @@ public class FileReceiver {
             System.out.println("   >Exiting...");
             
         } else{
-            System.out.println("   >File to receive: " + fileName);
+            System.out.print("   >File to receive: " + fileName);
             FilesArray receivedArray = ms.receiveArray();
 
             FileReceiverHandler binario = new FileReceiverHandler(fileName);

@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.text.StyledDocument;
+import uMessenger.ChatClient;
 
 //SAME ON FILERECEIVER AND FILESENDER
 public class FilesConnection {
@@ -13,6 +15,9 @@ public class FilesConnection {
     private String dir;
     public String fileName;
     
+    ChatClient zz;
+    StyledDocument doc;
+    
     Socket socketCliente;
     ServerSocket socketServer;
     
@@ -20,9 +25,12 @@ public class FilesConnection {
     DataOutputStream dos;
     
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
-    public FilesConnection(String dir, int port){
+    public FilesConnection(String dir, int port, StyledDocument doc){
         this.port = port;
         this.dir = dir;
+        this.doc = doc;
+        
+        zz = new ChatClient(doc);
         
         dis = null;
         dos = null;
@@ -30,8 +38,11 @@ public class FilesConnection {
         openClientSocket();
         openStreams();
     }
-    public FilesConnection(int port){
+    public FilesConnection(int port, StyledDocument doc){
         this.port = port;
+        this.doc = doc;
+        
+        zz = new ChatClient(doc);
         
         dis = null;
         dos = null;
@@ -43,11 +54,11 @@ public class FilesConnection {
 //////METHODS///////////////////////////////////////////////////////////////////
     private void openClientSocket(){
         
-        System.out.print("   >Trying to connect to " + dir + "(" + port + ")..");
+        zz.printOnScreen("   >Trying to connect to " + dir + "(" + port + ")..", "GRAY");
         do{
             try {
                 socketCliente = new Socket(dir, port);
-                System.out.println("\n   >Connected to the receiver!");
+                zz.printOnScreen("\n   >Connected to the receiver!\n", "GRAY");
 
             } catch (IOException ex) {
             }
@@ -55,15 +66,15 @@ public class FilesConnection {
     }
     private void openServerSocket(){
         
-        System.out.print("   >Waiting for the sender...");
+        zz.printOnScreen("   >Waiting for the sender...", "GRAY");
         do{
             try {
                 socketServer = new ServerSocket(port);
                 socketCliente = socketServer.accept();
-                System.out.println("\n   >Connected to the sender!");
+                zz.printOnScreen("\n   >Connected to the sender!\n", "GRAY");
 
             } catch (Exception ex) {
-                System.out.print(".");
+                zz.printOnScreen(".", "GREEN");
             } 
         } while(socketServer == null);
     }
@@ -134,11 +145,14 @@ public class FilesConnection {
     public void sendArray(FilesArray a, long segmentSize){
         
         long dim = a.getDim();
-        System.out.println("   >File size: " + dim/1000 + "kb");
+        if((float)dim/1000000 < 1)
+            zz.printOnScreen(" [" + (float)dim/1000 + "kb]\n", "GRAY");
+        if((float)dim/1000000 > 1)
+            zz.printOnScreen(" [" + (float)dim/1000000 + "Mb]\n", "GRAY");
+        
         sendLong(dim);
-        //System.out.println("  >Segment size: " + segmentSize);
         sendLong(segmentSize);
-        System.out.print("    [");
+        zz.printOnScreen("    [", "GRAY");
         
         //All segments except the last one
         //Because last segment may be smaller than segment size
@@ -154,7 +168,7 @@ public class FilesConnection {
             
             //NEW WAY OF DISPLAYING PROGRESS:
             if(i > j*(dim/segmentSize)/34){
-                System.out.print("|");
+                zz.printOnScreen("|", "GRAY");
                 j++;
             }
             
@@ -164,21 +178,22 @@ public class FilesConnection {
         //Last segment 
         try {
             dos.write( a.getArray(), i*(int)segmentSize, (int)(dim%segmentSize) );
-            System.out.println("|]");
+            zz.printOnScreen("|]\n", "GRAY");
             
         } catch (IOException ex) {
             System.out.println("   >ERROR SENDING LAST SEGMENT: " + ex);
         }
-        System.out.println("   >File transfer complete.");
     }
     
     public FilesArray receiveArray(){
         
         long dim = receiveLong();
-        System.out.println("   >File size: " + dim/1000 + "kb");
+        if((float)dim/1000000 < 1)
+            zz.printOnScreen(" [" + (float)dim/1000 + "kb]\n", "GRAY");
+        if((float)dim/1000000 > 1)
+            zz.printOnScreen(" [" + (float)dim/1000000 + "Mb]\n", "GRAY");
         long segmentSize = receiveLong();
-        //System.out.println("  >Segment size: " + segmentSize);
-        System.out.print("    [");
+        zz.printOnScreen("    [", "GRAY");
         
         //All segments except the last one
         //Because last segment may be smaller than segment size
@@ -195,7 +210,7 @@ public class FilesConnection {
             
             //NEW WAY OF DISPLAYING PROGRESS:
             if(i > j*(dim/segmentSize)/32){
-                System.out.print("|");
+                zz.printOnScreen("|", "GRAY");
                 j++;
             }
             i++;
@@ -204,12 +219,11 @@ public class FilesConnection {
         //Last segment
         try {
             dis.read( b.getArray(), i*(int)segmentSize, (int)dim%(int)segmentSize);
-            System.out.println("|]");
+            zz.printOnScreen("|]\n", "GREEN");
             
         } catch (IOException ex) {
             System.out.println("   >ERROR RECEIVING LAST SEGMENT: " + ex);
         }
-        System.out.println("   >File transfer complete.");
         
         return b;
     }

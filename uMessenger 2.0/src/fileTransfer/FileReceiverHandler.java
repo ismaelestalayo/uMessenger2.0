@@ -18,7 +18,7 @@ public class FileReceiverHandler {
     FileOutputStream fos;
     BufferedOutputStream bos;
     DataOutputStream dos;
-    
+        
     private String fileName;
     private int dim;
     
@@ -106,7 +106,6 @@ public class FileReceiverHandler {
     public void dumpArrayToFile(FilesArray a){
         
         openBinaryWriting();
-        System.out.println("   >File " + fileName + " saved.");
         
         try {
             dos.write( a.getArray() );

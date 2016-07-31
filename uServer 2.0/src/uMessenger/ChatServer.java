@@ -25,7 +25,7 @@ import java.io.*;
 
 public class ChatServer implements Runnable {
 
-    private ChatServerThread clients[] = new ChatServerThread[10];
+    private ChatServerThread clients[] = new ChatServerThread[20];
     private ServerSocket server = null;
     private Thread thread = null;
     
@@ -34,8 +34,9 @@ public class ChatServer implements Runnable {
     
     private final String C_RST = "\u001B[0m";
     private final String C_RED = "\u001B[31m";
+    private  final String C_BLACK = "\u001B[30m";
     
-   private String[] colors = {"CYAN", "GREEN", "YELLOW", "PINK", "RED", "BLUE"};
+   private String[] colors = {"CYAN", "GREEN", "YELLOW", "MAGENTA", "RED", "BLUE", "PINK"};
     
     //CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatServer(int port) {
@@ -61,7 +62,7 @@ public class ChatServer implements Runnable {
     public void run() {
         while (thread != null) {
             try {
-                System.out.println("Waiting for a new client...");
+                System.out.println("Waiting for a new client..." + C_RST);
                 addThread(server.accept() );
                 
             } catch (IOException ex) {
@@ -126,13 +127,13 @@ public class ChatServer implements Runnable {
         }
         
         else if(msg.equals("/IPs")){
-            String userList = "Users' IPs: \n";
+            String userList = "   Users IPs: \n";
             
             for (int i = 0; i < clientCount; i++){
                 if(i != clientCount -1){
-                    userList += "   " + clients[i].getUserName() + " (" +clients[i].getUserIP()+ ")\n";
+                    userList += "    • " + clients[i].getUserName() + " (" +clients[i].getUserIP()+ ")\n";
                 } else{
-                    userList += "   " + clients[i].getUserName() + " (" +clients[i].getUserIP()+ ")";
+                    userList += "    • " + clients[i].getUserName() + " (" +clients[i].getUserIP()+ ")";
                 }
             }
             
@@ -195,13 +196,13 @@ public class ChatServer implements Runnable {
         }
         
         else if(msg.equals("/users") ){
-            String userList = "   Online user: \n";
+            String userList = "   Online users: \n";
             
             for (int i = 0; i < clientCount; i++){
                 if(i != clientCount-1){
-                    userList += "   " + clients[i].getUserColor() + clients[i].getUserName() + C_RST + "\n";
+                    userList += "    • " + clients[i].getUserName() + "\n";
                 } else{
-                    userList += "   " + clients[i].getUserColor() + clients[i].getUserName() + C_RST;
+                    userList += "    • " + clients[i].getUserName();
                 }
             }
             
@@ -263,7 +264,7 @@ public class ChatServer implements Runnable {
         }
     }
     private void addThread(Socket socket) {
-        if(c > 5)
+        if(c > 6)
             c = 0;
         clients[clientCount] = new ChatServerThread(this, socket, colors[c]);
         c++;
@@ -286,8 +287,7 @@ public class ChatServer implements Runnable {
     //**************************************************************************
     
     private String helpMessage(){
-        return "    Available commands: \n"
-                + "    /fin - Ends your current session.\n"
+        return "   Available commands: \n"
                 + "    /help - This one\n"
                 + "    /IPs - Prints a list of users and their IPs\n"
                 + "    /sendUser - Send a file to the specified user.\n"

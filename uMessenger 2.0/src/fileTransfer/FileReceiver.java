@@ -1,23 +1,28 @@
 package fileTransfer;
 
+import javax.swing.text.StyledDocument;
+import uMessenger.ChatClient;
+
 public class FileReceiver {
     
     private String fileName;
     
-    public FileReceiver(){
-        FilesConnection ms = new FilesConnection(5077);
+    public FileReceiver(StyledDocument doc){
+        FilesConnection ms = new FilesConnection(5077, doc);
+        ChatClient zz = new ChatClient(doc);
         
         fileName = ms.receiveString();
         if(fileName.equals("NULL") ){
-            System.out.println("   >Sender didnt select a file.");
-            System.out.println("   >Exiting...");
+            zz.printOnScreen("   >Sender didnt select a file.\n", "GRAY");
+            zz.printOnScreen("   >Exiting...\n", "GREEN");
             
         } else{
-            System.out.println("   >File to receive: " + fileName);
+            zz.printOnScreen("   >File to receive: " + fileName, "GRAY");
             FilesArray receivedArray = ms.receiveArray();
 
             FileReceiverHandler binario = new FileReceiverHandler(fileName);
             binario.dumpArrayToFile(receivedArray);
+            zz.printOnScreen("   >File " +fileName+ " saved.\n", "GRAY");
         }
         ms.closeAllSockets();
     }

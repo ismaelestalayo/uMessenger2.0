@@ -12,18 +12,18 @@ public class ChatServerThread extends Thread {
         
     private int ID = -1;
     private String userName = "";
-    private String color;
+    private String color = "";
     
     private final String C_RST = "\u001B[0m";
     private final String C_CYAN = "\u001B[36m";
     private final String C_RED = "\u001B[31m";
     
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
-    public ChatServerThread(ChatServer cs, Socket socket, String MyColor) {
+    public ChatServerThread(ChatServer cs, Socket socket, String myColor) {
         super();
         this.server = cs;
         this.socket = socket;
-        this.color = MyColor;
+        this.color = myColor;
         ID = socket.getPort();
     }
     
@@ -81,13 +81,11 @@ public class ChatServerThread extends Thread {
         
         if(newUser){
             f.addToList(userName + "\n");
-            sendMsg("INFO", userName, color, 
-                    "___________________________________________________________");
+            //sendMsg("INFO", userName, color, "Welcome, new user " + userName);
         }
             
         else{
-            sendMsg("INFO", userName, color, 
-                    "___________________________________________________________");
+            //sendMsg("INFO", userName, color, "Welcome back, " + userName);
         }
     }
     public void openStreams() throws IOException {

@@ -41,22 +41,23 @@ public final class ChatClient implements Runnable{
     
     private JTextField textBox;
     private JTextPane textPane = new JTextPane();
-    
+    private JScrollPane scroll;
+    private Style CYAN = textPane.addStyle(null, null);
+    private Style GREEN = textPane.addStyle(null, null);
+    private Style YELLOW = textPane.addStyle(null, null);
+    private Style MAGENTA = textPane.addStyle(null, null);
+    private Style RED = textPane.addStyle(null, null);
     private Style BLUE = textPane.addStyle(null, null);
     private Style PINK = textPane.addStyle(null, null);
-    private Style GREEN = textPane.addStyle(null, null);
-    private Style CYAN = textPane.addStyle(null, null);
-    private Style RED = textPane.addStyle(null, null);
-    private Style BLACK = textPane.addStyle(null, null);
-    private Style YELLOW = textPane.addStyle(null, null);
     private Style WHITE = textPane.addStyle(null, null);
+    private Style GRAY = textPane.addStyle(null, null);
     private StyledDocument doc = textPane.getStyledDocument();
     
     private final SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
     //"[" +fmt.format(new Date())+"] "
     
-    public static final String C_RST = "";
-    public static final String C_GREEN = "";
+    public static final String C_RST = "\u001B[0m";
+    public static final String C_GREEN = "\u001B[32m";
     
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatClient(String dir, int port) {
@@ -75,19 +76,21 @@ public final class ChatClient implements Runnable{
         }
                 
         /////// GUI ↓ //////////////////////////////////////
-        StyleConstants.setForeground(BLUE, Color.blue);
-        StyleConstants.setForeground(RED, Color.RED);
-        StyleConstants.setForeground(PINK, Color.PINK);
-        StyleConstants.setForeground(GREEN, Color.GREEN);
-        StyleConstants.setForeground(CYAN, Color.CYAN);
-        StyleConstants.setForeground(BLACK, Color.BLACK);
+        StyleConstants.setForeground(CYAN, Color.cyan);
+        StyleConstants.setForeground(GREEN, Color.green);
         StyleConstants.setForeground(YELLOW, Color.yellow);
+        StyleConstants.setForeground(MAGENTA, Color.magenta);
+        StyleConstants.setForeground(RED, Color.red);
+        StyleConstants.setForeground(BLUE, Color.blue);
+        StyleConstants.setForeground(PINK, Color.pink);
         StyleConstants.setForeground(WHITE, Color.WHITE);
+        StyleConstants.setForeground(GRAY, Color.DARK_GRAY);
         
-        printOnScreenln(welcomeMessage(), GREEN);
+        printOnScreen(welcomeMessage(), "GREEN");
         
         textPane.setEditable(false);
         textPane.setBackground(Color.black);
+        textPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 11) );
         
         textBox = new JTextField();
         textBox.setBackground(Color.GRAY);
@@ -95,15 +98,21 @@ public final class ChatClient implements Runnable{
         textBox.addActionListener((ActionEvent event) -> {
             sendString(event.getActionCommand() );
             textBox.setText("");
+            scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
         });
         
         JFrame frame = new JFrame(userName);
         frame.getContentPane().add(textPane);
         frame.getContentPane().add(textBox, BorderLayout.SOUTH);
-        frame.getContentPane().add(new JScrollPane(textPane));
-        frame.setSize(460, 600);
+        frame.getContentPane().add(scroll = new JScrollPane(textPane));
+        frame.setSize(480, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+    public ChatClient(StyledDocument doc){
+        //This constructor is for the FileSender class
+        //to be able to use printOnScreen from there
+        this.doc = doc;
     }
     
     //MAIN//////////////////////////////////////////////////////////////////////
@@ -122,18 +131,23 @@ public final class ChatClient implements Runnable{
 //////METHODS///////////////////////////////////////////////////////////////////
     private String welcomeMessage(){
         return ""
-            + "         _______                                    \n"
-            + " .--.--.|   |   |.-----.-----.-----.-----.-----.-----.-----.----.   \n"
-            + " |  |  ||       ||  -__|__ --|__ --|  -__|     |  _  |  -__|   _|   \n"
-            + " |_____||__|_|__||_____|_____|_____|_____|__|__|___  |_____|__|     \n"
-            + "                                               |_____|              \n"
-            + "Welcome to UMessenger 2.0 (by Ismael Estalayo).\n"
-            + "\n"
-            + "This is a small messenger-like app made with Sockets in Java with a GUI\n"
-            + "to chat with your friends. \n"
-            + "Use /help for available commands.\n"
-            + "\n"
-            + "Full info and suggestions at www.github.com/IsmaelEstalayo\n";
+                + "Welcome to uMessenger 2.0 (by Ismael Estalayo).\n"
+                + "       __  __                                          \n"
+                + "      |  \\/  |                                         \n"
+                + " _   _| \\  / | ___  ___ ___  ___ _ __   __ _  ___ _ __ \n"
+                + "| | | | |\\/| |/ _ \\/ __/ __|/ _ \\ '_ \\ / _` |/ _ \\ '__|\n"
+                + "| |_| | |  | |  __/\\__ \\__ \\  __/ | | | (_| |  __/ |   \n"
+                + " \\__,_|_|  |_|\\___||___/___/\\___|_| |_|\\__, |\\___|_|   \n"
+                + "                                        __/ |          \n"
+                + "                                       |___/            \n"
+                + "This is a small messenger-like app made with Sockets in Java \n"
+                + "with a GUI to chat with your friends on the same LAN. You can\n"
+                + "also use a RaspBerry Pi to host a server and chat among      \n"
+                + "different LANs.                                              \n"
+                + "Use /help for available commands.                            \n"
+                + "\n"
+                + "Full code and suggestions at www.github.com/IsmaelEstalayo   \n"
+                + "───────────────────────────────────────\n";
     }
     
     public void start() throws IOException {
@@ -171,71 +185,45 @@ public final class ChatClient implements Runnable{
         String msg = obj.getMsg();
         
         switch (type) {
+            
             case "CHAT":
-                switch (color){
-                    case "BLUE":
-                        printOnScreen(user + ": ", BLUE);
-                        break;
-                        
-                    case "CYAN":
-                        printOnScreen(user + ": ", CYAN);
-                        break;
-                    case "GREEN":
-                        printOnScreen(user + ": ", GREEN);
-                        break;
-                    case "PURPLE":
-                        printOnScreen(user + ": ", PINK);
-                        break;
-                    case "RED":
-                        printOnScreen(user + ": ", RED);
-                        break;
-                    case "YELLOW":
-                        printOnScreen(user + ": ", YELLOW);
-                        break;
-                    default:
-                        printOnScreenln("ERROR GETTING YOUR COLOR!", WHITE);
-                        printOnScreen(user + ": ", WHITE);
-                        break;
-                }
-                
-                printOnScreenln(msg, WHITE);
-                
+                printOnScreen(user + ": ", color);
+                printOnScreen(msg + "\n", "WHITE");
                 break;
                 
             case "INFO":
                 //Only print it to the user that did the request
                 if(user.equals(userName) )
-                    printOnScreenln(msg, GREEN);
+                    printOnScreen(msg + "\n", "GRAY");
                 
                 break;
             
             case "NEW":
                 //Print to all users
-                printOnScreenln("User " +user+ " connected!", CYAN);
+                printOnScreen("User " +user+ " connected!\n", "CYAN");
                 break;
                 
             case "FIN":
                 //For the user that requested it, end it's session
                 if(user.equals(userName) ){
-                    printOnScreenln("_________________________________________", RED);
-                    printOnScreenln("Good bye. You can now close the window...", RED);
+                    printOnScreen("_________________________________________\n", "RED");
+                    printOnScreen("Good bye. You can now close the window...\n", "RED");
                     closeAll();
                 }
                 //Rest of users, message of dissconect
                 else{
-                    printOnScreenln("User " +user+ " dissconected.", RED);
+                    printOnScreen("User " +user+ " dissconected.\n", "RED");
                 }
                 break;
             
             case "FILE":
                 if(user.equals(userName) ){
-                    printOnScreenln("Opening a subprocess for sending a file..", GREEN);
-                    FileSender sender = new FileSender(dir);
+                    printOnScreen("   Opening a subprocess for sending a file..\n", "GRAY");
+                    FileSender sender = new FileSender(dir, doc);
                     
                 } else{
-                    printOnScreenln("Opening a subprocess for receiving a file..", GREEN);
-                    FileReceiver receiver = new FileReceiver();
-                    
+                    printOnScreen("   Opening a subprocess for receiving a file..\n", "GRAY");
+                    FileReceiver receiver = new FileReceiver(doc);
                 }
                 break;
         }
@@ -267,20 +255,40 @@ public final class ChatClient implements Runnable{
         }
     }
 
-    public void printOnScreen(String msg, Style style){
+    public void printOnScreen(String msg, String color){
         try {
-            doc.insertString(doc.getLength(), msg, style);
-            
-        } catch (BadLocationException ex) {
-            System.out.println("ERRORRRRRRRRR: " + ex);
-        }
-    }
-    public void printOnScreenln(String msg, Style style){
-        try {
-            doc.insertString(doc.getLength(), msg + "\n", style);
-            
-        } catch (BadLocationException ex) {
-            System.out.println("ERRORRRRRRRRR: " + ex);
+            switch (color) {
+                case "CYAN":
+                    doc.insertString(doc.getLength(), msg, CYAN);
+                    break;
+                case "GREEN":
+                    doc.insertString(doc.getLength(), msg, GREEN);
+                    break;
+                case "YELLOW":
+                    doc.insertString(doc.getLength(), msg, YELLOW);
+                    break;
+                case "MAGENTA":
+                    doc.insertString(doc.getLength(), msg, MAGENTA);
+                    break;
+                case "RED":
+                    doc.insertString(doc.getLength(), msg, RED);
+                    break;
+                case "BLUE":
+                    doc.insertString(doc.getLength(), msg, BLUE);
+                    break;
+                case "PINK":
+                    doc.insertString(doc.getLength(), msg, PINK);
+                    break;
+                case "GRAY":
+                    doc.insertString(doc.getLength(), msg, GRAY);
+                    break;
+                default:
+                    doc.insertString(doc.getLength(), msg, WHITE);
+                    break;
+            }
+
+        } catch (BadLocationException ex){
+            System.out.println("ERRRRROR: " + ex);
         }
     }
     

@@ -14,7 +14,7 @@ public class FileSender {
             System.out.println("   >Exiting...");
             
         } else{
-            System.out.println("   >File to send: " + fileName);
+            System.out.print("   >File to send: " + fileName);
 
             FilesArray fileDumpedInArray = file.dumpFileToArray();
             con.sendArray(fileDumpedInArray, 1);
