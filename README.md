@@ -11,7 +11,7 @@ If you wanna try it yourself you can either:
  _Inside the rar there are .cmd files that executes `java -jar uMessenger_Client.jar` in a new command window (perfect for lazy people like myself)_.
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/uMessenger/master/Images/Client.png" width = "60%"/>
+  <img src="https://raw.githubusercontent.com/ismaelestalayo/uMessenger-WithUI/master/Images/Screenshot.jpg" width = "60%"/>
 </p>
 
 #Changelog:
