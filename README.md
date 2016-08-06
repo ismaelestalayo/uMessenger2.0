@@ -32,6 +32,3 @@ If you wanna try it yourself you can either:
 
  * Email: ismael.em@outlook.com
  * Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
-
-_NOTE:_
-_I made the sending of files so that I could change the size of the segments I was sending, but the only size where the videos weren't corrupted was at the size of 1 byte. Even so, I've left the code there, so if you wanna try it yourself, on the FileSending class just change `con.sendArray(fileDumpedInArray, 1)`  to the size of segment you want, bear in mind that most files will be corrupted although I noticed photos not being corrupted but severely altered with a segment size greater than 500._
