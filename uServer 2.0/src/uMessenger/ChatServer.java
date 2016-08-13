@@ -34,7 +34,6 @@ public class ChatServer implements Runnable {
     
     private final String C_RST = "\u001B[0m";
     private final String C_RED = "\u001B[31m";
-    private  final String C_BLACK = "\u001B[30m";
     
    private String[] colors = {"CYAN", "GREEN", "YELLOW", "MAGENTA", "RED", "BLUE", "PINK"};
     

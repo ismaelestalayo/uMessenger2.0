@@ -27,7 +27,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
-public final class ChatClient implements Runnable{
+public final class ChatClient extends JFrame implements Runnable{
 
     private Socket socket = null;
     private Thread thread = null;
@@ -39,9 +39,13 @@ public final class ChatClient implements Runnable{
     private static String userName;
     private static String dir = null;
     
-    private JTextField textBox;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JTextField jTextField1;
     private JTextPane textPane = new JTextPane();
-    private JScrollPane scroll;
+    private JTextPane userList;
+    private JButton jButton1;
+    
     private Style CYAN = textPane.addStyle(null, null);
     private Style GREEN = textPane.addStyle(null, null);
     private Style YELLOW = textPane.addStyle(null, null);
@@ -56,18 +60,15 @@ public final class ChatClient implements Runnable{
     private final SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
     //"[" +fmt.format(new Date())+"] "
     
-    public static final String C_RST = "\u001B[0m";
-    public static final String C_GREEN = "\u001B[32m";
-    
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatClient(String dir, int port) {
                 
-        System.out.print(C_GREEN + "Connecting, please wait...");
+        System.out.print("Connecting, please wait...");
         while(socket == null){
             try {
                 socket = new Socket(dir, port);
                 System.out.println("\nConnected to: " 
-                        + socket.getInetAddress().getHostAddress() + C_RST );
+                        + socket.getInetAddress().getHostAddress());
                 start();
 
             } catch (IOException ex) {
@@ -88,26 +89,7 @@ public final class ChatClient implements Runnable{
         
         printOnScreen(welcomeMessage(), "GREEN");
         
-        textPane.setEditable(false);
-        textPane.setBackground(Color.black);
-        textPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 11) );
-        
-        textBox = new JTextField();
-        textBox.setBackground(Color.GRAY);
-        textBox.setEditable(true);
-        textBox.addActionListener((ActionEvent event) -> {
-            sendString(event.getActionCommand() );
-            textBox.setText("");
-            scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
-        });
-        
-        JFrame frame = new JFrame(userName);
-        frame.getContentPane().add(textPane);
-        frame.getContentPane().add(textBox, BorderLayout.SOUTH);
-        frame.getContentPane().add(scroll = new JScrollPane(textPane));
-        frame.setSize(480, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        initComponents();
     }
     public ChatClient(StyledDocument doc){
         //This constructor is for the FileSender class
@@ -118,11 +100,11 @@ public final class ChatClient implements Runnable{
     //MAIN//////////////////////////////////////////////////////////////////////
     public static void main(String args[]) {
         
-        System.out.print(C_GREEN + "(If you are the server, put your IP, not 'localhost')\n");
-        System.out.print("Insert the IP of the server: " + C_RST);
+        System.out.print("(If you are the server, put your IP, not 'localhost')\n");
+        System.out.print("Insert the IP of the server: ");
         dir = keyboard.nextLine();
         
-        System.out.print(C_GREEN + "Choose an user name: " + C_RST);
+        System.out.print("Choose an user name: ");
         userName = keyboard.nextLine();
         
         ChatClient client = new ChatClient(dir, 5000);
@@ -163,11 +145,11 @@ public final class ChatClient implements Runnable{
     @Override
     public void run() {
         while (thread != null){
-            //keep opened
+            //keep open
         }
     }
     
-    private void sendString(String s){
+    public void sendString(String s){
         try {
             dos.writeUTF(s);
             dos.flush();
@@ -200,7 +182,7 @@ public final class ChatClient implements Runnable{
             
             case "NEW":
                 //Print to all users
-                printOnScreen("User " +user+ " connected!\n", "CYAN");
+                printOnScreen("   >User " +user+ " connected!\n", "CYAN");
                 break;
                 
             case "FIN":
@@ -212,17 +194,17 @@ public final class ChatClient implements Runnable{
                 }
                 //Rest of users, message of dissconect
                 else{
-                    printOnScreen("User " +user+ " dissconected.\n", "RED");
+                    printOnScreen("   >User " +user+ " dissconected.\n", "RED");
                 }
                 break;
             
             case "FILE":
                 if(user.equals(userName) ){
-                    printOnScreen("   Opening a subprocess for sending a file..\n", "GRAY");
+                    printOnScreen("   >Opening a subprocess for sending a file..\n", "GRAY");
                     FileSender sender = new FileSender(dir, doc);
                     
                 } else{
-                    printOnScreen("   Opening a subprocess for receiving a file..\n", "GRAY");
+                    printOnScreen("   >Opening a subprocess for receiving a file..\n", "GRAY");
                     FileReceiver receiver = new FileReceiver(doc);
                 }
                 break;
@@ -291,5 +273,67 @@ public final class ChatClient implements Runnable{
             System.out.println("ERRRRROR: " + ex);
         }
     }
+    private void initComponents() {
+
+        jScrollPane1 = new JScrollPane();
+            jScrollPane1.setViewportView(textPane);
+        jScrollPane2 = new JScrollPane();
+            jScrollPane2.setViewportView(userList);
+            textPane.setBackground(Color.BLACK);
+            textPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 11) );
+        userList = new javax.swing.JTextPane();
+            userList.setBackground(Color.BLACK);
+            userList.setEditable(false);
+        jTextField1 = new JTextField();
+            jTextField1.setBackground(Color.GRAY);
+            jTextField1.addActionListener((java.awt.event.ActionEvent evt) -> {
+                jTextField1ActionPerformed(evt);
+            });
+        jButton1 = new JButton();
+            jButton1.setText("Attach");
+            jButton1.addActionListener((java.awt.event.ActionEvent evt) -> {
+                jButton1ActionPerformed(evt);
+        });
+        
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
+        );
+
+        pack();
+        setVisible(true);
+    }
+    private void jTextField1ActionPerformed(ActionEvent evt) {                                            
+        sendString(evt.getActionCommand() );
+        jTextField1.setText("");
+    }                                           
+
+    private void jButton1ActionPerformed(ActionEvent evt) {                                         
+        printOnScreen("   >Attach function comming soon..\n", "RED");
+    } 
     
 }

@@ -10,9 +10,6 @@ public final class ChatClientThread extends Thread{
     
     private ObjectInputStream ois = null;
     
-    public static final String C_RST = "\u001B[0m";
-    public static final String C_RED = "\u001B[31m";
-    
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatClientThread(ChatClient cc, Socket ss) {
         client = cc;
@@ -49,8 +46,8 @@ public final class ChatClientThread extends Thread{
                 client.chatting(obj);
                 
             } catch (IOException | ClassNotFoundException ex) {
-                System.out.println(C_RED + "_________________________________________");
-                System.out.println("Lost connection with the server: " + ex + C_RST);
+                System.out.println("_________________________________________");
+                System.out.println("Lost connection with the server: " + ex);
                 client.closeAll();
             }
         }
