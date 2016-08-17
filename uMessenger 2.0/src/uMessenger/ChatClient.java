@@ -113,7 +113,7 @@ public final class ChatClient extends JFrame implements Runnable{
 //////METHODS///////////////////////////////////////////////////////////////////
     private String welcomeMessage(){
         return ""
-                + "Welcome to uMessenger 2.0 (by Ismael Estalayo).\n"
+                //+ "Welcome to uMessenger 2.0 (by Ismael Estalayo).\n"
                 + "       __  __                                          \n"
                 + "      |  \\/  |                                         \n"
                 + " _   _| \\  / | ___  ___ ___  ___ _ __   __ _  ___ _ __ \n"
@@ -122,10 +122,6 @@ public final class ChatClient extends JFrame implements Runnable{
                 + " \\__,_|_|  |_|\\___||___/___/\\___|_| |_|\\__, |\\___|_|   \n"
                 + "                                        __/ |          \n"
                 + "                                       |___/            \n"
-                + "This is a small messenger-like app made with Sockets in Java \n"
-                + "with a GUI to chat with your friends on the same LAN. You can\n"
-                + "also use a RaspBerry Pi to host a server and chat among      \n"
-                + "different LANs.                                              \n"
                 + "Use /help for available commands.                            \n"
                 + "\n"
                 + "Full code and suggestions at www.github.com/IsmaelEstalayo   \n"
@@ -268,7 +264,9 @@ public final class ChatClient extends JFrame implements Runnable{
                     doc.insertString(doc.getLength(), msg, WHITE);
                     break;
             }
-
+            //Autoscroll
+            textPane.setCaretPosition(textPane.getDocument().getLength() );
+            
         } catch (BadLocationException ex){
             System.out.println("ERRRRROR: " + ex);
         }
@@ -279,12 +277,15 @@ public final class ChatClient extends JFrame implements Runnable{
             jScrollPane1.setViewportView(textPane);
         jScrollPane2 = new JScrollPane();
             jScrollPane2.setViewportView(userList);
+        /////////////////////////////////
             textPane.setBackground(Color.BLACK);
             textPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 11) );
+            textPane.setEditable(false);
         userList = new javax.swing.JTextPane();
             userList.setBackground(Color.BLACK);
             userList.setEditable(false);
         jTextField1 = new JTextField();
+            jTextField1.setEditable(true);
             jTextField1.setBackground(Color.GRAY);
             jTextField1.addActionListener((java.awt.event.ActionEvent evt) -> {
                 jTextField1ActionPerformed(evt);
@@ -294,6 +295,8 @@ public final class ChatClient extends JFrame implements Runnable{
             jButton1.addActionListener((java.awt.event.ActionEvent evt) -> {
                 jButton1ActionPerformed(evt);
         });
+        DefaultCaret caret = (DefaultCaret)textPane.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
