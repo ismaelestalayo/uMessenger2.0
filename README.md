@@ -11,10 +11,15 @@ If you wanna try it yourself you can either:
  _Inside the rar there are .cmd files that executes `java -jar uMessenger_Client.jar` in a new command window (perfect for lazy people like myself)_.
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/uMessenger-WithUI/master/Images/Screenshot.jpg" width = "60%"/>
+  <img src="https://github.com/ismaelestalayo/uMessenger2.0--WithGUI/blob/master/Images/Screenshot.jpg?raw=true" width = "60%"/>
 </p>
 
 #Changelog:
+####2.2:
+- Added autoscroll
+- Fixed some problems with UI
+- Added 'Attach' button (functionality coming soon)
+
 ####2.0:
 - First version of uMessenger (with GUI).
 - All functionalities from previous version should be working.
