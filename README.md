@@ -1,6 +1,6 @@
 # uMessenger 2.0 (with GUI)
 
-Small Messenger-like application now with user interface, and works on the same LAN only (unless using NAT on the server side with a Raspberry for example). **It's important to have userList.txt on the directory where the server is.**
+Small Messenger-like application now with user interface, and works on the same LAN only (unless using NAT on the server side with a Raspberry for example).
 
 If you wanna try it yourself you can either:
 
@@ -8,13 +8,20 @@ If you wanna try it yourself you can either:
 
 - Or download the zip file for being either a server or a client and run the corresponding .jar from the command line. Click on one of the rar files, and in the upper right corner, click on raw to download it.
 
- _Inside the rar there are .cmd files that executes `java -jar uMessenger_Client.jar` in a new command window (perfect for lazy people like myself)_.
+<p align = "center">
+  <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "60%"/>
+</p>
 
 <p align = "center">
-  <img src="https://github.com/ismaelestalayo/uMessenger2.0--WithGUI/blob/master/Images/Screenshot.jpg?raw=true" width = "60%"/>
+  <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Chat.jpg?raw=true" width = "60%"/>
 </p>
 
 #Changelog:
+####2.3:
+- Removed necessity to have userList.txt on the server side.
+- Added menus at the top bar.
+- Improved UI.
+
 ####2.2:
 - Added autoscroll
 - Fixed some problems with UI
