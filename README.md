@@ -9,7 +9,7 @@ If you wanna try it yourself you can either:
 - Or download the zip file for being either a server or a client and run the corresponding .jar from the command line. Click on one of the rar files, and in the upper right corner, click on raw to download it.
 
 <p align = "center">
-  <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "60%"/>
+  <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "30%"/>
 </p>
 
 <p align = "center">
