@@ -35,6 +35,7 @@ public class ChatServerThread extends Thread {
         System.out.println(C_CYAN + "Added client " + userName + " (" + getUserIP()
                 + ") on thread " + ID + C_RST);
         server.broadcast(userName, color, ID, "/newUser");
+        server.addClientToList(userName);
         
         while (true) {
             try {
@@ -67,26 +68,6 @@ public class ChatServerThread extends Thread {
             System.out.println("ERROR reading userName: " + ex);
         }
         
-        boolean newUser = true;
-        UserListHandler f = new UserListHandler("userList.txt");
-        
-        f.openReadMode();
-        String line = null;
-        while( (line = f.readLine()) != null){
-            if( line.equals(userName) )
-                newUser = false;
-        }
-        
-        f.closeReadMode();
-        
-        if(newUser){
-            f.addToList(userName + "\n");
-            //sendMsg("INFO", userName, color, "Welcome, new user " + userName);
-        }
-            
-        else{
-            //sendMsg("INFO", userName, color, "Welcome back, " + userName);
-        }
     }
     public void openStreams() throws IOException {
         dis = new DataInputStream(new BufferedInputStream(socket.getInputStream() ) );

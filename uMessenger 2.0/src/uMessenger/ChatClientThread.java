@@ -9,6 +9,7 @@ public final class ChatClientThread extends Thread{
     private ChatClient client = null;
     
     private ObjectInputStream ois = null;
+    private Object obj;
     
 //////CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatClientThread(ChatClient cc, Socket ss) {
@@ -42,7 +43,7 @@ public final class ChatClientThread extends Thread{
         
         while (true) {
             try {
-                Object obj = (Object)ois.readObject();
+                obj = (Object)ois.readObject();
                 client.chatting(obj);
                 
             } catch (IOException | ClassNotFoundException ex) {

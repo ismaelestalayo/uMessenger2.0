@@ -24,6 +24,7 @@ import java.net.*;
 import java.io.*;
 
 public class ChatServer implements Runnable {
+    
 
     private ChatServerThread clients[] = new ChatServerThread[20];
     private ServerSocket server = null;
@@ -31,11 +32,12 @@ public class ChatServer implements Runnable {
     
     private int clientCount = 0;
     private int c = 0;              //For the array of colors
+    private String[] userList = new String[20];
     
     private final String C_RST = "\u001B[0m";
     private final String C_RED = "\u001B[31m";
     
-   private String[] colors = {"CYAN", "GREEN", "YELLOW", "MAGENTA", "RED", "BLUE", "PINK"};
+    private String[] colors = {"CYAN", "GREEN", "YELLOW", "MAGENTA", "RED", "BLUE", "PINK"};
     
     //CONSTRUCTOR///////////////////////////////////////////////////////////////
     public ChatServer(int port) {
@@ -251,9 +253,12 @@ public class ChatServer implements Runnable {
             if (pos < clientCount - 1) {
                 for (int i = pos + 1; i < clientCount; i++) {
                     clients[i - 1] = clients[i];
+                    userList[i - 1] = userList[i];
                 }
             }
+            
             clientCount--;
+            
             try {
                 threadToClose.close();
             } catch (IOException ioe) {
@@ -279,6 +284,9 @@ public class ChatServer implements Runnable {
         }
     }
     
+    public void addClientToList(String name){
+        userList[clientCount - 1] = name;
+    }
     //**************************************************************************
     //**************************************************************************
     //**************************************************************************
