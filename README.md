@@ -6,7 +6,7 @@ If you wanna try it yourself you can either:
 
 - Download the zip of the full repository and compile it yourself on your favourite IDE.
 
-- Or download the zip file for being either a server or a client and run the corresponding .jar from the command line. Click on one of the rar files, and in the upper right corner, click on raw to download it.
+- Or download the jar files for being either a server or a client, and run any of them by double clicking. (The server has no UI, so once you double-click you will not see anything, but it will be running anyway).
 
 <p align = "center">
   <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "30%"/>
