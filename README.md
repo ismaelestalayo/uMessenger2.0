@@ -37,6 +37,7 @@ If you wanna try it yourself you can either:
 - ~~Usernames~~ with password
 - ~~Ability to send files~~
 - ~~Ability to send files between different LANs~~
+- Synchronous list of online users 
 - Save logs from the server
 - (More) Commands
 
