@@ -112,6 +112,23 @@ public class ChatServer implements Runnable {
         
         /////// my commands   ↑ //////////////////////////////////////
         /////// chat commands ↓ //////////////////////////////////////
+        else if(msg.equals("/attach")){
+            String fileName = "";
+            for (int i = 0; i < clientCount; i++) {
+                if (clients[i].getUserName().equals(userName)) {
+                    clients[i].sendMsg("FILE", userName, color, "doesnt mind");
+                    FileReceiver receiver = new FileReceiver();
+                    fileName = receiver.getFileName();
+                }
+            }
+            for(int i = 0; i < clientCount; i++) {
+                if (!clients[i].getUserName().equals(userName)) {
+                    clients[i].sendMsg("FILE", userName, color, "doesn't mind");
+                    FileSender sender = new FileSender(clients[i].getUserIP(), fileName);
+
+                }
+            }
+        }
         
         else if(msg.equals("/fin") ){
             for (int i = 0; i < clientCount; i++)
@@ -190,10 +207,6 @@ public class ChatServer implements Runnable {
                     
                 }
             }
-        }
-        
-        else if(msg.equals("/trivial")){
-            fileTransfer.FileSenderHandler f = new FileSenderHandler("trivial.txt");
         }
         
         else if(msg.equals("/users") ){
@@ -295,10 +308,11 @@ public class ChatServer implements Runnable {
     
     private String helpMessage(){
         return "   Available commands: \n"
+                + "    'attach' button send a file to everyone.\n"
                 + "    /help - This one\n"
                 + "    /IPs - Prints a list of users and their IPs\n"
                 + "    /sendUser - Send a file to the specified user.\n"
-                + "    /users - Prints a list of online users";
+                + "    /users - Prints a list of online users. \n";
     }
 }
 

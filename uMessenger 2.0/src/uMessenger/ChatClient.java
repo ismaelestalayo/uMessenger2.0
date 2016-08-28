@@ -322,7 +322,7 @@ public final class ChatClient extends JFrame implements Runnable{
         jButton1 = new JButton();
             jButton1.setText("Attach");
             jButton1.addActionListener((ActionEvent evt) -> {
-                printOnScreen("   >Attach function comming soon..\n", "RED");
+                sendString("/attach");
             });
         caret = (DefaultCaret)textPane.getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
