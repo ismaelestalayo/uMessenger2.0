@@ -1,4 +1,4 @@
-# uMessenger 2.0 (with GUI)
+# uMessenger 2.0
 
 Small Messenger-like application now with user interface, and works on the same LAN only (unless using NAT on the server side with a Raspberry for example).
 
@@ -7,6 +7,10 @@ If you wanna try it yourself you can either:
 - Download the zip of the full repository and compile it yourself on your favourite IDE.
 
 - Or download the jar files for being either a server or a client, and run any of them by double clicking. (The server has no UI, so once you double-click you will not see anything, but it will be running anyway).
+
+      [Download uMessenger.jar](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uMessenger_2.0.jar)
+      
+      [Download uServer.jar](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uServer_2.0.jar)
 
 <p align = "center">
   <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "30%"/>
@@ -17,6 +21,10 @@ If you wanna try it yourself you can either:
 </p>
 
 #Changelog:
+####2.4:
+- Added functionality to 'Attach' button (send a file to everyone).
+- Looks to be the final version, now that the next year of university is close. (You can still suggest anything or report any bugs).
+
 ####2.3:
 - Removed necessity to have userList.txt on the server side.
 - Added menus at the top bar.
