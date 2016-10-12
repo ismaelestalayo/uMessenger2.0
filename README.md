@@ -19,9 +19,13 @@ or a [client](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uMessen
 </p>
 
 #Changelog:
+####2.5:
+- Fixed /attach button not working.
+- Fixed a bug when starting the client.
+- This will be for now the last version. I don't know when I'll add new functionality. (You can still suggest anything or report any bugs).
+
 ####2.4:
 - Added functionality to 'Attach' button (send a file to everyone).
-- Looks to be the final version, now that the next year of university is close. (You can still suggest anything or report any bugs).
 
 ####2.3:
 - Removed necessity to have userList.txt on the server side.
