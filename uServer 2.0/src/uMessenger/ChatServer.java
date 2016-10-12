@@ -116,6 +116,7 @@ public class ChatServer implements Runnable {
             String fileName = "";
             for (int i = 0; i < clientCount; i++) {
                 if (clients[i].getUserName().equals(userName)) {
+                    System.out.println("ALELUYA!");
                     clients[i].sendMsg("FILE", userName, color, "doesnt mind");
                     FileReceiver receiver = new FileReceiver();
                     fileName = receiver.getFileName();
