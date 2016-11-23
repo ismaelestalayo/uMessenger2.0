@@ -8,7 +8,11 @@ If you wanna try it yourself you can either:
 
 - Or download the jar files for being either a [server](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uServer_2.0.jar)
 or a [client](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uMessenger_2.0.jar)
-, and run any of them by double clicking. (The server has no UI, so once you double-click you will not see anything, but it will be running anyway).
+, and run any of them by double clicking. 
+
+:rotating_light:
+  The server has no UI, so once you double-click you will not see anything, but it will be running anyway.
+  :rotating_light:
 
 <p align = "center">
   <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Log%20in.jpg?raw=true" width = "30%"/>
