@@ -22,31 +22,31 @@ or a [client](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uMessen
   <img src="https://github.com/ismaelestalayo/uMessenger2.0/blob/master/Images/Chat.jpg?raw=true" width = "60%"/>
 </p>
 
-#Changelog:
-####2.5:
+# Changelog:
+#### 2.5:
 - Fixed /attach button not working.
 - Fixed a bug when starting the client.
 - This will be for now the last version. I don't know when I'll add new functionality. (You can still suggest anything or report any bugs).
 
-####2.4:
+#### 2.4:
 - Added functionality to 'Attach' button (send a file to everyone).
 
-####2.3:
+#### 2.3:
 - Removed necessity to have userList.txt on the server side.
 - Added menus at the top bar.
 - Improved UI.
 
-####2.2:
+#### 2.2:
 - Added autoscroll
 - Fixed some problems with UI
 - Added 'Attach' button (functionality coming soon)
 
-####2.0:
+#### 2.0:
 - First version of uMessenger (with GUI).
 - All functionalities from previous version should be working.
 - There is a huge bug where after the welcoming message, nothing else prints on your screen, will try to fix it ASAP.
 
-#Future plans:
+# Future plans:
 
 - ~~Usernames~~ with password
 - ~~Ability to send files~~
@@ -55,7 +55,7 @@ or a [client](https://github.com/ismaelestalayo/uMessenger2.0/raw/master/uMessen
 - Save logs from the server
 - (More) Commands
 
-#Suggest anything at:
+# Suggest anything at:
 
  * Email: ismael.em@outlook.com
  * Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
