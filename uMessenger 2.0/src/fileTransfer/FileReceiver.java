@@ -14,7 +14,7 @@ public class FileReceiver {
         fileName = ms.receiveString();
         if(fileName.equals("NULL") ){
             zz.printOnScreen("   >Sender didnt select a file.\n", "GRAY");
-            zz.printOnScreen("   >Exiting...\n", "GREEN");
+            zz.printOnScreen("   >Exiting...\n", "GRAY");
             
         } else{
             zz.printOnScreen("   >File to receive: " + fileName, "GRAY");

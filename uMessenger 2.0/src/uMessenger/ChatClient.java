@@ -96,6 +96,7 @@ public final class ChatClient extends JFrame implements Runnable{
         //This constructor is for the FileSender class
         //to be able to use printOnScreen from there
         this.doc = doc;
+        StyleConstants.setForeground(GRAY, Color.DARK_GRAY);
     }
     
     //MAIN//////////////////////////////////////////////////////////////////////
@@ -261,6 +262,7 @@ public final class ChatClient extends JFrame implements Runnable{
 
     public void printOnScreen(String msg, String color){
         try {
+            System.out.println("VAMOH A IMPRIMIR EL MSG EN " + color);
             switch (color) {
                 case "CYAN":
                     doc.insertString(doc.getLength(), msg, CYAN);

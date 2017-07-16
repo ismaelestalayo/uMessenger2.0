@@ -19,7 +19,6 @@ package uMessenger;
 
 import fileTransfer.FileReceiver;
 import fileTransfer.FileSender;
-import fileTransfer.FileSenderHandler;
 import java.net.*;
 import java.io.*;
 

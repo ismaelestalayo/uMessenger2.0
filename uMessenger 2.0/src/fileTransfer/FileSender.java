@@ -14,16 +14,16 @@ public class FileSender {
         con.sendString(fileName );
         
         if(fileName.equals("NULL")){
-            zz.printOnScreen("   >File not selected. \n", "GREEN");
-            zz.printOnScreen("   >Exiting... \n", "GREEN");
+            zz.printOnScreen("   >File not selected. \n", "GRAY");
+            zz.printOnScreen("   >Exiting... \n", "GRAY");
             
         } else{
-            zz.printOnScreen("   >File to send: " + fileName, "GREEN");
+            zz.printOnScreen("   >File to seeeend: " + fileName, "GRAY");
 
             FilesArray fileDumpedInArray = file.dumpFileToArray();
             con.sendArray(fileDumpedInArray, 1);
             
-            zz.printOnScreen("   >File " + fileName + " sent. \n", "GREEN");
+            zz.printOnScreen("   >File " + fileName + " sent. \n", "GRAY");
         }
         con.closeAllSockets();
     }
